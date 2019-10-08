@@ -8,16 +8,15 @@ import { Instance } from './model/instance';
 })
 export class MqqtService {
 
-  private mqttStatus: string = 'Disconnected';
-  private mqttClient: any = null;
-  private message: any = '';
-  private messageToSend: string = 'Type your message here.';
-  private topic: string = 'swen325/a3';
-  private clientId: string = '342323cwwefdasfrwe'; // this string must be unique to every client
+  public mqttStatus: string = 'Disconnected';
+  public mqttClient: any = null;
+  public message: any = '';
+  public topic: string = 'swen325/a3';
+  public clientId: string = '342323cwwefdasfrwe'; // this string must be unique to every client
 
-  private instances: Instance[] = [];
+  public instances: Instance[] = [];
 
-  private instance: Instance = new Instance();
+  public instance: Instance = new Instance();
 
   public connect() {
       this.mqttStatus = 'Connecting...';
@@ -39,13 +38,7 @@ export class MqqtService {
           this.mqttStatus = 'Disconnected';
       }
   }
-
-  public sendMessage() {
-      if(this.mqttStatus == 'Connected') {
-          this.mqttClient.publish(this.topic, this.messageToSend);
-      }
-  }
-
+  
   public onConnect = () => {
       console.log('Connected');
       this.mqttStatus = 'Connected';

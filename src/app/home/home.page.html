@@ -6,7 +6,7 @@
 
 <ion-content padding>
   <ion-card>
-    <ion-card-content>Status: <b>{{this.mqttStatus}}</b></ion-card-content>
+    <ion-card-content>Status: <b>{{this.mqqtService.mqttStatus}}</b></ion-card-content>
   </ion-card>
 
   <ion-row justify-content-center align-items-center>
@@ -17,16 +17,8 @@
 
   <ion-card>
     <ion-card-header>Message Received:</ion-card-header>
-    <ion-card-content>{{this.message}}</ion-card-content>
+    <ion-card-content>{{this.mqqtService.message}}</ion-card-content>
   </ion-card>
 
-  <ion-card>
-      <ion-card-header>Message to Send:</ion-card-header>
-      <ion-textarea [(ngModel)]='messageToSend'>{{this.messageToSend}}</ion-textarea>
-  </ion-card>
-
-  <ion-row justify-content-center align-items-center>
-    <button ion-button full (click)="sendMessage()">Send Message</button>
-  </ion-row>
 </ion-content>
 
