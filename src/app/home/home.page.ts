@@ -1,5 +1,8 @@
-import { NavController } from '@ionic/angular';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Message } from "../model/message";
+import { Instance } from '../model/instance'
 
 @Component({
   selector: 'page-home',
@@ -12,10 +15,15 @@ export class HomePage {
   private message: any = '';
   private messageToSend: string = 'Type your message here.';
   private topic: string = 'swen325/a3';
-  private clientId: string = '342323cwwerwe'; // this string must be unique to every client
+  private clientId: string = '342323cwwefdasfrwe'; // this string must be unique to every client
 
-  constructor(public navCtrl: NavController) {
+  private instances: Instance[] = [];
 
+  private instance: Instance = new Instance();
+
+  constructor(
+    private router: Router
+    ){
   }
 
   public connect() {
@@ -68,6 +76,18 @@ export class HomePage {
   public onMessageArrived = (message) => {
    console.log('Received message');
    this.message = message.payloadString;
+   this.instance.addRoom(new Message(this.message));
+
+    if(this.instance.getLength() == 5){
+      this.instances.push(this.instance);
+      console.log(this.instance)
+      this.instance = new Instance();
+    }
+
+  }
+
+  public navToSenior() {
+    this.router.navigate(['/senior']);
   }
 
 }
