@@ -20,6 +20,35 @@ export class Message {
         this.battery_status = parseInt(msgStrings[3]);
     }
 
+    public getDate(): string {
+          return this.timestamp.toString().split('GMT')[0];
+    }
+
+    public getRoom(): string {
+        return this.sensor_location.charAt(0).toUpperCase() + this.sensor_location.substr(1);
+    }
+
+    public hasMotion(): boolean {
+        return (this.motion_status === 0) ? false : true;
+    } 
+
+    public getLocation(): string {
+        switch (this.sensor_location) {
+            case 'bedroom':
+                return '../../assets/images/house_bedroom.PNG';
+            case 'dining':
+                return '../../assets/images/house_dining.PNG';
+            case 'kitchen':
+                return '../../assets/images/house_kitchen.PNG';
+            case 'toilet':
+                return '../../assets/images/house_toilet.PNG';
+            case 'living':
+                return '../../assets/images/house_living.PNG';
+            default:
+                return '../../assets/images/house.PNG'
+        }
+    }
+
     public toString(): string {
         return '\nTime: ' + this.timestamp.toString() +   
         '\nLocation: ' + this.sensor_location +

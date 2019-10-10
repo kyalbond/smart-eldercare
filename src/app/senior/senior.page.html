@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Smart-Eldercare</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+  
+    <ion-text *ngIf="!mqqtService.connected" color="danger" style="text-align:center;">
+      <h4> <b> {{mqqtService.mqttStatus}}</b> </h4>
+    </ion-text>
+  
+    <ion-text *ngIf="mqqtService.connected" color="success" style="text-align:center;">
+      <h4> <b> {{mqqtService.mqttStatus}}</b> </h4>
+    </ion-text>
+  
+    <img src="{{mqqtService.locationImg}}" />
+  
+    <ion-text color="primary" style="text-align:center;">
+      <h4> <b> Last seen {{mqqtService.locationTime}} in {{mqqtService.locationString}}</b> </h4>
+    </ion-text>
+  
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button color="danger" shape="round" expand="full" (click)="navEmergency()">Emergency</ion-button>
+        <ion-button color="primary" shape="round" expand="full" (click)="navBattery()">Battery Status</ion-button>
+        <ion-button color="primary" fill="outline" (click)="connect()" *ngIf="!mqqtService.connected">Connect</ion-button>
+        <ion-button color="primary" style="text-align:center" fill="outline" (click)="disconnect()"
+          *ngIf="mqqtService.connected">Disconnect</ion-button>
+      </ion-col>
+    </ion-row>
+  
+  </ion-content>

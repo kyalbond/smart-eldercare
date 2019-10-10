@@ -1,39 +1,15 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Smart-Eldercare</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs>
+    <ion-tab-bar slot="bottom">
 
-<ion-content padding>
-  <!-- <ion-card>
-    <ion-card-content>Status: <b>{{this.mqqtService.mqttStatus}}</b></ion-card-content>
-  </ion-card>
+        <ion-tab-button tab="senior">
+            <ion-icon name="person"></ion-icon>
+            <ion-label>Senior Status</ion-label>
+        </ion-tab-button>
 
-  <ion-row justify-content-center align-items-center>
-    <button ion-button (click)="connect()">Connect</button>
-    <button ion-button (click)="disconnect()">Disconnect</button>
-  </ion-row>
+        <ion-tab-button tab="graph">
+            <ion-icon name="stats"></ion-icon>
+            <ion-label>Movements</ion-label>
+        </ion-tab-button>
 
-  <ion-card>
-    <ion-card-header>Message Received:</ion-card-header>
-    <ion-card-content>{{this.mqqtService.message}}</ion-card-content>
-  </ion-card> -->
-
-
-  <ion-text color="danger" style="text-align:center;">
-    <h4>Status: {{mqqtService.mqttStatus}}</h4>
-  </ion-text>
-
-
-  <img src="{{locationImg}}" />
-  <ion-card-header>
-    <ion-card-subtitle>Last Seen {{locationTime}}</ion-card-subtitle>
-    <ion-card-title>{{locationString}}</ion-card-title>
-  </ion-card-header>
-  
-  <ion-button color="danger">Emergency</ion-button>
-  <ion-button color="primary">Battery Status</ion-button>
-  <ion-button color="primary">Connect</ion-button>
-
-
-</ion-content>
+    </ion-tab-bar>
+</ion-tabs>

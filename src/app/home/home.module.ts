@@ -2,21 +2,38 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+
+const routes: Routes = [
+  {
+    path: 'tabs',
+    component: HomePage,
+    children: [
+      {
+        path: 'senior',
+        loadChildren: './senior/senior.module#SeniorPageModule'
+      },
+      {
+        path: 'graph',
+        loadChildren: './graph/graph.module#GraphPageModule'
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'tabs/senior',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: HomePage
-      }
-    ])
+    RouterModule.forChild(routes)
   ],
   declarations: [HomePage]
 })
