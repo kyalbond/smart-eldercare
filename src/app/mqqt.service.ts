@@ -28,7 +28,7 @@ export class MqqtService {
 
   public connected = false;
 
-  public graphData: number[] = [1,2,3,4,5]
+  public graphData: number[] = [1, 2, 3, 4, 5];
 
   public onMessageArrived = (message) => {
     console.log('Received message');
@@ -43,19 +43,18 @@ export class MqqtService {
 
       switch (this.msg.sensor_location) {
         case 'kitchen':
-          console.log('inccrementing kit')
           this.graphData[0] = this.graphData[0] + 1;
+          break;
         case 'dining':
-            console.log('inccrementing dining')
           this.graphData[1] = this.graphData[1] + 1;
+          break;
         case 'toilet':
-            console.log('inccrementing toilet')
           this.graphData[2] = this.graphData[2] + 1;
+          break;
         case 'living':
-            console.log('inccrementing living')
           this.graphData[3] = this.graphData[3] + 1;
+          break;
         case 'bedroom':
-            console.log('inccrementing bedroom')
           this.graphData[4] = this.graphData[4] + 1;
       }
 

@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild  } from '@angular/core';
-import { Chart } from "chart.js";
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Chart } from 'chart.js';
 import { MqqtService } from '../mqqt.service';
 
 @Component({
@@ -7,32 +7,35 @@ import { MqqtService } from '../mqqt.service';
   templateUrl: './graph.page.html',
   styleUrls: ['./graph.page.scss'],
 })
-export class GraphPage{
-  @ViewChild("doughnutCanvas", { read: ElementRef, static: true }) doughnutCanvas: ElementRef;
+export class GraphPage implements OnInit{
+  @ViewChild('doughnutCanvas', { read: ElementRef, static: true }) doughnutCanvas: ElementRef;
   private doughnutChart: Chart;
 
-  constructor(public mqqtService: MqqtService) {}
+  constructor(public mqqtService: MqqtService) {
+  }
 
   ngOnInit() {
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-      type: "doughnut",
+      type: 'doughnut',
       data: {
-        labels: ["Kitchen", "Dining", "Toilet", "Living","Bedroom"],
+        labels: ['Kitchen', 'Dining', 'Toilet', 'Living', 'Bedroom'],
         datasets: [
           {
-            data: [0,0,0,0,0],
+            data: [0, 0, 0, 0, 0],
             backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(255, 159, 64, 0.2)"
-            ],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF6384", "#FFCE56"]
-          }
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#FF6384',
+              '#FFCE56'
+            ]}
         ]
       }
     });
+    this.updateData();
+    setInterval(() => {
+      this.updateData();
+    }, 2500);
   }
 
   public updateData() {

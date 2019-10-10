@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MqqtService } from '../mqqt.service';
 
 @Component({
   selector: 'app-battery',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BatteryPage implements OnInit {
 
-  constructor() { }
+  constructor(public mqqtService: MqqtService) { }
 
   ngOnInit() {
   }
