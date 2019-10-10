@@ -1,4 +1,4 @@
-import { Message } from "../model/message";
+import { Message } from "./message";
 
 export class Instance{
     rooms: Message[] = [];

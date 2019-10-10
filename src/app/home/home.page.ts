@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Message } from "../model/message";
-import { Instance } from '../model/instance'
-
-import { MqqtService } from '../mqqt.service'
+import { MqqtService } from '../mqqt.service';
 
 @Component({
   selector: 'page-home',
@@ -12,6 +9,10 @@ import { MqqtService } from '../mqqt.service'
   providers: [MqqtService]
 })
 export class HomePage {
+
+  public locationImg: any = '../../assets/images/house.PNG';
+  public locationTime: any = 'Unknown';
+  public locationString: any = 'No Movement';
 
   constructor(
     public router: Router,
@@ -26,9 +27,4 @@ export class HomePage {
   public disconnect() {
     this.mqqtService.disconnect();
   }
-
-  public navToSenior() {
-    this.router.navigate(['/senior']);
-  }
-
 }

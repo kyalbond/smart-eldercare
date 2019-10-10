@@ -1,24 +1,34 @@
 <ion-header>
-    <ion-title>
-      MQTT Tutorial
-    </ion-title>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Smart-Eldercare</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-content>Status: <b>{{this.mqqtService.mqttStatus}}</b></ion-card-content>
   </ion-card>
 
   <ion-row justify-content-center align-items-center>
     <button ion-button (click)="connect()">Connect</button>
     <button ion-button (click)="disconnect()">Disconnect</button>
-    <button ion-button (click)="navToSenior()">Senior</button>
   </ion-row>
 
   <ion-card>
     <ion-card-header>Message Received:</ion-card-header>
     <ion-card-content>{{this.mqqtService.message}}</ion-card-content>
-  </ion-card>
+  </ion-card> -->
+
+
+    <img src="{{locationImg}}" />
+      <ion-card-header>
+    <ion-card-subtitle>Last Seen {{locationTime}}</ion-card-subtitle>
+    <ion-card-title>{{locationString}}</ion-card-title>
+    </ion-card-header>
+
 
 </ion-content>
 
