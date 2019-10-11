@@ -5,9 +5,11 @@ import { Instance } from './model/instance';
 declare var Paho: any;    // Mqqt JS import
 
 /**
+ * MARKING OBJECTIVE 1
+ * 
  * Mqqt Service which handles all raw-data recieved from server
  * sorting it into data objects which can be utilised from the
- * application.
+ * application. 
  */
 @Injectable({
   providedIn: 'root'
@@ -28,11 +30,12 @@ export class MqqtService {
   public motionMessages: Message[] = [];          // List of all messages with movement
 
   public locationImg: any = '../../assets/images/house.PNG';  // Current image to be displayed for location
-  public locationTime: any = null;             // Latest time of last msg sent
+  public locationTime: any = null;                // Latest time of last msg sent
   public locationString: any = 'house.';          // Latest name of last msg sent
 
   public connected = false;                       // Boolean for if client is connected
 
+  // MARKING OBJECTIVE 4
   public movementWarning = false;                 // Boolean for if movement has been detected
   public timer: any;                              // Timer for movement check
   public TIMEOUT_TIME = 300000;                   // Timeout for timer (300000 = 5 minutes)

@@ -5,6 +5,8 @@ import { MqqtService } from '../mqqt.service';
 import { AlertController } from '@ionic/angular';
 
 /**
+ * MARKING OBJECTIVE 2
+ * 
  * SeniorPage is the main screen of this application. It handles displaying where
  * the elder was last seen, the ability to connect to the server, navigate to emergency,
  * battery status and movements.
@@ -18,6 +20,8 @@ export class SeniorPage {
   public timeSince = 'never'
 
   /**
+   * MARKING OBJECTIVE 4
+   * 
    * Initialize variables and start an interval timer for check if it has been 5 minutes.
    * (Occurs every 5 seconds)
    * 

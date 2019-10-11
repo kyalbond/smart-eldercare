@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EmergencyDetails, grandpaJoe } from '../model/emergencyDetails';
 
 /**
+ * MARKING OBJECTIVE 5
+ * 
  * Class for handling emergency details page
  */
 @Component({
