@@ -66,4 +66,5 @@ export class Message {
                 return '../../assets/images/house.PNG';
         }
     }
+
 }

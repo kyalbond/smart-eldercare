@@ -32,8 +32,8 @@ export class GraphPage implements OnInit {
               '#FF6384',
               '#36A2EB',
               '#FFCE56',
-              '#FF6384',
-              '#FFCE56'
+              '#93e626',
+              '#ac7ceb'
             ]
           }
         ]
@@ -59,3 +59,4 @@ export class GraphPage implements OnInit {
     this.doughnutChart.update();
   }
 }
+

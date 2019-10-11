@@ -15,6 +15,7 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./senior.page.scss'],
 })
 export class SeniorPage {
+  public timeSince = 'never'
 
   /**
    * Initialize variables and start an interval timer for check if it has been 5 minutes.
@@ -33,7 +34,10 @@ export class SeniorPage {
       if (mqqtService.movementWarning === true) {
         this.createAlert('WARNING', 'No movement has occured for 5 minutes!');
       }
-    }, 5000);
+      try { 
+        this.timeSince = mqqtService.timeSince(mqqtService.locationTime) + ' ago';
+      } catch (error) {}
+    }, 1000);
   }
 
   /**

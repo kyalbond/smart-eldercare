@@ -25,10 +25,10 @@ export class MqqtService {
   public oldInstance: Instance = new Instance();  // Old instance for getting latest battery info
 
   public instances: Instance[] = [];              // List of all instances recieved
-  public motionMessages: Message[] = [];   // List of all messages with movement
+  public motionMessages: Message[] = [];          // List of all messages with movement
 
   public locationImg: any = '../../assets/images/house.PNG';  // Current image to be displayed for location
-  public locationTime: any = 'never';             // Latest time of last msg sent
+  public locationTime: any = null;             // Latest time of last msg sent
   public locationString: any = 'house.';          // Latest name of last msg sent
 
   public connected = false;                       // Boolean for if client is connected
@@ -48,10 +48,13 @@ export class MqqtService {
     this.msg = new Message(this.message);          // Create a message object out of the payload
 
     if (this.msg.hasMotion()) {                    // When a message has been detected with motion
+      this.motionMessages.reverse();
       this.motionMessages.push(this.msg);
+      this.motionMessages.reverse();
+
       this.locationImg = this.msg.getLocation();
       this.locationString = this.msg.getRoom();
-      this.locationTime = this.msg.getDate();
+      this.locationTime = this.msg.timestamp;
 
       // Reset warning timer
       this.movementWarning = false;
@@ -151,4 +154,21 @@ export class MqqtService {
       this.mqttStatus = 'Disconnected';
     }
   }
+
+  /**
+   * Compares two dates and returns time in the form of '.. minutes ago'
+   * @param date Date to be compared to now
+   */
+  public timeSince(date: Date): string {
+    var eventStartTime = new Date();
+    var duration = date.valueOf() - eventStartTime.valueOf();
+    var result = (duration / 1000)%60;
+
+    if (result < 1) {
+      return 'less than 1 minute'
+    } 
+
+    return result + 'minutes';
+}
+
 }
