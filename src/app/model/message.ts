@@ -13,11 +13,11 @@ export class Message {
     constructor(message: string) {
         this.message = message;
 
-        var msgStrings = message.split(',');
+        const msgStrings = message.split(',');
         this.timestamp = new Date(msgStrings[0]);
         this.sensor_location = msgStrings[1];
-        this.motion_status = parseInt(msgStrings[2]);
-        this.battery_status = parseInt(msgStrings[3]);
+        this.motion_status = parseInt(msgStrings[2], 10);
+        this.battery_status = parseInt(msgStrings[3], 10);
     }
 
     public getDate(): string {
@@ -30,7 +30,7 @@ export class Message {
 
     public hasMotion(): boolean {
         return (this.motion_status === 0) ? false : true;
-    } 
+    }
 
     public getLocation(): string {
         switch (this.sensor_location) {
@@ -45,12 +45,12 @@ export class Message {
             case 'living':
                 return '../../assets/images/house_living.PNG';
             default:
-                return '../../assets/images/house.PNG'
+                return '../../assets/images/house.PNG';
         }
     }
 
     public toString(): string {
-        return '\nTime: ' + this.timestamp.toString() +   
+        return '\nTime: ' + this.timestamp.toString() +
         '\nLocation: ' + this.sensor_location +
         '\nMotion Detected: ' + this.motion_status +
         '\nBattery Status: ' + this.battery_status + '%';

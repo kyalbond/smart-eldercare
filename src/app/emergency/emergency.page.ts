@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmergencyDetails, grandpaJoe } from '../model/emergencyDetails';
 
 @Component({
   selector: 'app-emergency',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmergencyPage implements OnInit {
 
-  constructor() { }
+  elderDetails: EmergencyDetails = null;
+
+  constructor() {
+  }
 
   ngOnInit() {
+    this.elderDetails = grandpaJoe;
   }
 
 }

@@ -14,4 +14,17 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-list>
+    <ion-title style="color:darkslategrey"><b>Recently detected movements:</b></ion-title>
+    <ion-item-divider></ion-item-divider>
+      <ion-item *ngFor="let msg of mqqtService.motionMessages">
+          <ion-grid>
+              <ion-row>
+                  <ion-title>{{msg.getRoom()}}</ion-title>
+                  <ion-card-subtitle>{{msg.getDate()}}</ion-card-subtitle>
+              </ion-row>
+          </ion-grid>
+      </ion-item>
+  </ion-list>
+
 </ion-content>

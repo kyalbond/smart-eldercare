@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
     <ion-title>Emergency Details</ion-title>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content>
+    <ion-avatar class="ion-padding" style="width: 250px; height: 250px; margin: auto;">
+        <img src={{this.elderDetails.imageURL}}>
+    </ion-avatar>
 
+    <ion-card>
+        <ion-card-header>
+          
+          <ion-card-title>{{this.elderDetails.name}}</ion-card-title>
+          <ion-card-subtitle>Address: {{this.elderDetails.address}} <br> Phone: {{this.elderDetails.number}}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-title><b>Medical Details</b></ion-title>
+        <ion-list>
+            <ion-item *ngFor="let med of this.elderDetails.medical"> 
+                <ion-grid>
+                    <ion-row>
+                        <ion-title>{{med}}</ion-title>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+      </ion-card>
+    
 </ion-content>

@@ -20,7 +20,7 @@ export class MqqtService {
   public instance: Instance = new Instance();
 
   public instances: Instance[] = [];
-  public motionInstances: Message[] = [];
+  public motionMessages: Message[] = [new Message('2019-10-08 17:00:26,bedroom,0,88')];
 
   public locationImg: any = '../../assets/images/house.PNG';
   public locationTime: any = 'never';
@@ -28,7 +28,18 @@ export class MqqtService {
 
   public connected = false;
 
+  public movementWarning = false;
+  public timer: any;
+  public TIMEOUT_TIME = 300000;
+
+
   public graphData: number[] = [1, 2, 3, 4, 5];
+
+  constructor() {
+    this.timer = setTimeout(() => {
+      this.movementWarning = true;
+    }, this.TIMEOUT_TIME);
+  }
 
   public onMessageArrived = (message) => {
     console.log('Received message');
@@ -36,10 +47,16 @@ export class MqqtService {
     this.msg = new Message(this.message);
 
     if (this.msg.hasMotion()) {
-      this.motionInstances.push(this.msg);
+      this.motionMessages.push(this.msg);
       this.locationImg = this.msg.getLocation();
       this.locationString = this.msg.getRoom();
       this.locationTime = this.msg.getDate();
+
+      this.movementWarning = false;
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.movementWarning = true;
+      }, this.TIMEOUT_TIME);
 
       switch (this.msg.sensor_location) {
         case 'kitchen':
