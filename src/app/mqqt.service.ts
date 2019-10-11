@@ -37,7 +37,7 @@ export class MqqtService {
   public timer: any;                              // Timer for movement check
   public TIMEOUT_TIME = 300000;                   // Timeout for timer (300000 = 5 minutes)
 
-  public graphData: number[] = [0,0,0,0,0];   // Data for graph to pull information from
+  public graphData: number[] = [0, 0, 0, 0, 0];   // Data for graph to pull information from
 
   /**
    * Called when a message arrives from the server
@@ -162,13 +162,13 @@ export class MqqtService {
   public timeSince(date: Date): string {
     var eventStartTime = new Date();
     var duration = date.valueOf() - eventStartTime.valueOf();
-    var result = (duration / 1000)%60;
+    var result = (duration / 1000) % 60;
 
     if (result < 1) {
       return 'less than 1 minute'
-    } 
+    }
 
     return result + 'minutes';
-}
+  }
 
 }
