@@ -36,6 +36,7 @@ export class SeniorPage {
   ) {
     setInterval(() => {
       if (mqqtService.movementWarning === true) {
+        mqqtService.movementWarning = false;
         this.createAlert('WARNING', 'No movement has occured for 5 minutes!');
       }
       try { 

@@ -165,13 +165,14 @@ export class MqqtService {
   public timeSince(date: Date): string {
     var eventStartTime = new Date();
     var duration = date.valueOf() - eventStartTime.valueOf();
-    var result = (duration / 1000) % 60;
+    var result = ((duration / 1000) * -1) / 60;
+    var round = Math.floor(result);
 
-    if (result < 1) {
-      return 'less than 1 minute'
+    if (round < 1) {
+      return 'less than 1 minute';
+    } else if (round === 1) {
+      return round + ' minute';
     }
-
-    return result + 'minutes';
+    return round + ' minutes';
   }
-
 }
