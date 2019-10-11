@@ -1,15 +1,17 @@
-import { stringify } from 'querystring';
-
+/**
+ * Class for structing data recieved from mqqt server
+ */
 export class Message {
-    public message: string;
-    public timestamp: Date;
-    public sensor_location: string;
-    public motion_status: number;
-    public battery_status: number;
+    public message: string;             // Full raw data from mqqt server
+    public timestamp: Date;             // Timestamp of message
+    public sensor_location: string;     // Sensor location
+    public motion_status: number;       // Whether motion occured
+    public battery_status: number;      // Battery status of sensor
 
-    // Example
-    // "2019-10-08 17:00:26,bedroom,0,88"
-
+    /**
+     * Constuctor for placing data into variables
+     * @param message Raw data
+     */
     constructor(message: string) {
         this.message = message;
 
@@ -20,18 +22,30 @@ export class Message {
         this.battery_status = parseInt(msgStrings[3], 10);
     }
 
+    /**
+     * Get date from raw data
+     */
     public getDate(): string {
-          return this.timestamp.toString().split('GMT')[0];
+        return this.timestamp.toString().split('GMT')[0];
     }
 
+    /**
+     * Get room from raw data
+     */
     public getRoom(): string {
         return this.sensor_location.charAt(0).toUpperCase() + this.sensor_location.substr(1);
     }
 
+    /**
+     * Check whether motion was detected in this message
+     */
     public hasMotion(): boolean {
         return (this.motion_status === 0) ? false : true;
     }
 
+    /**
+     * Get image url for corresponding location
+     */
     public getLocation(): string {
         switch (this.sensor_location) {
             case 'bedroom':
@@ -49,10 +63,13 @@ export class Message {
         }
     }
 
+    /**
+     * Print object in neat format
+     */
     public toString(): string {
         return '\nTime: ' + this.timestamp.toString() +
-        '\nLocation: ' + this.sensor_location +
-        '\nMotion Detected: ' + this.motion_status +
-        '\nBattery Status: ' + this.battery_status + '%';
+            '\nLocation: ' + this.sensor_location +
+            '\nMotion Detected: ' + this.motion_status +
+            '\nBattery Status: ' + this.battery_status + '%';
     }
 }

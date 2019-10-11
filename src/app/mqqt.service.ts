@@ -1,63 +1,65 @@
 import { Injectable } from '@angular/core';
-
 import { Message } from './model/message';
 import { Instance } from './model/instance';
 
-declare var Paho: any;
+declare var Paho: any;    // Mqqt JS import
 
+/**
+ * Mqqt Service which handles all raw-data recieved from server
+ * sorting it into data objects which can be utilised from the
+ * application.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class MqqtService {
 
-  public mqttStatus: any = 'Disconnected';
-  public mqttClient: any = null;
-  public topic: any = 'swen325/a3';
-  public message: any = '';
-  public clientId: any = '342323cwwefdasfrwe'; // this string must be unique to every client
+  public mqttStatus: any = 'Disconnected';        // Status of Client
+  public mqttClient: any = null;                  // Mqqt Client
+  public topic: any = 'swen325/a3';               // Topic to subscribe to
+  public message: any = '';                       // Latest message from server
+  public clientId: any = '342323cwwefdasfrwe';    // This string must be unique to every client
 
-  public msg: Message = null;
-  public instance: Instance = new Instance();
+  public msg: Message = null;                     // Latest message from server in data structure
+  public instance: Instance = new Instance();     // Latest instance of messages (contains one msg for each room)
 
-  public instances: Instance[] = [];
-  public motionMessages: Message[] = [new Message('2019-10-08 17:00:26,bedroom,0,88')];
+  public instances: Instance[] = [];              // List of all instances recieved
+  public motionMessages: Message[] = [new Message('2019-10-08 17:00:26,bedroom,0,88')];   // List of all messages with movement
 
-  public locationImg: any = '../../assets/images/house.PNG';
-  public locationTime: any = 'never';
-  public locationString: any = 'house.';
+  public locationImg: any = '../../assets/images/house.PNG';  // Current image to be displayed for location
+  public locationTime: any = 'never';             // Latest time of last msg sent
+  public locationString: any = 'house.';          // Latest name of last msg sent
 
-  public connected = false;
+  public connected = false;                       // Boolean for if client is connected
 
-  public movementWarning = false;
-  public timer: any;
-  public TIMEOUT_TIME = 300000;
+  public movementWarning = false;                 // Boolean for if movement has been detected
+  public timer: any;                              // Timer for movement check
+  public TIMEOUT_TIME = 300000;                   // Time for timer (300000 = 5 minutes)
 
+  public graphData: number[] = [1, 2, 3, 4, 5];   // Data for graph to pull information from
 
-  public graphData: number[] = [1, 2, 3, 4, 5];
-
-  constructor() {
-    this.timer = setTimeout(() => {
-      this.movementWarning = true;
-    }, this.TIMEOUT_TIME);
-  }
-
+  /**
+   * Called when a message arrives from the server
+   */
   public onMessageArrived = (message) => {
     console.log('Received message');
     this.message = message.payloadString;
-    this.msg = new Message(this.message);
+    this.msg = new Message(this.message);          // Create a message object out of the payload
 
-    if (this.msg.hasMotion()) {
+    if (this.msg.hasMotion()) {                    // When a message has been detected with motion
       this.motionMessages.push(this.msg);
       this.locationImg = this.msg.getLocation();
       this.locationString = this.msg.getRoom();
       this.locationTime = this.msg.getDate();
 
+      // Reset warning timer
       this.movementWarning = false;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
         this.movementWarning = true;
       }, this.TIMEOUT_TIME);
 
+      // Add appropriate data to the graph
       switch (this.msg.sensor_location) {
         case 'kitchen':
           this.graphData[0] = this.graphData[0] + 1;
@@ -77,6 +79,7 @@ export class MqqtService {
 
     }
 
+    // Create an instance out of the data given
     this.instance.addRoom(this.msg);
     if (this.instance.getLength() === 5) {
       this.instances.push(this.instance);
@@ -85,6 +88,9 @@ export class MqqtService {
     }
   }
 
+  /**
+   * Attempt to connect to mqqt server
+   */
   public connect() {
     this.mqttStatus = 'Connecting...';
     this.mqttClient = new Paho.MQTT.Client('barretts.ecs.vuw.ac.nz', 8883, '/mqtt', this.clientId);
@@ -98,30 +104,47 @@ export class MqqtService {
     this.mqttClient.connect({ timeout: 10, useSSL: false, onSuccess: this.onConnect, onFailure: this.onFailure });
   }
 
+  /**
+   * Attempt to discconect from mqqt server
+   */
   public disconnect() {
     if (this.mqttStatus === 'Connected') {
       this.mqttStatus = 'Disconnecting...';
       this.mqttClient.disconnect();
       this.mqttStatus = 'Disconnected';
       this.connected = false;
+      clearTimeout(this.timer);
     }
   }
 
+  /**
+   * When a successful connection is made to the mqqt server
+   */
   public onConnect = () => {
     console.log('Connected');
     this.mqttStatus = 'Connected';
     this.connected = true;
 
-    // subscribe
+    // Start warning timer
+    this.timer = setTimeout(() => {
+      this.movementWarning = true;
+    }, this.TIMEOUT_TIME);
+
+    // Subscribe to server
     this.mqttClient.subscribe(this.topic);
   }
 
+  /**
+   * If failed to connect to server
+   */
   public onFailure = (responseObject) => {
     console.log('Failed to connect');
     this.mqttStatus = 'Failed to connect';
   }
 
-
+  /**
+   * When connection is lost to server
+   */
   public onConnectionLost = (responseObject) => {
     if (responseObject.errorCode !== 0) {
       this.mqttStatus = 'Disconnected';

@@ -2,18 +2,24 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { MqqtService } from '../mqqt.service';
 
+/**
+ * Class for hadling graph page, using chart.js for graphs, and
+ * displaying a list of all movements
+ */
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.page.html',
   styleUrls: ['./graph.page.scss'],
 })
-export class GraphPage implements OnInit{
+export class GraphPage implements OnInit {
   @ViewChild('doughnutCanvas', { read: ElementRef, static: true }) doughnutCanvas: ElementRef;
   private doughnutChart: Chart;
 
-  constructor(public mqqtService: MqqtService) {
-  }
+  constructor(public mqqtService: MqqtService) { }
 
+  /**
+   * Initialize chart with appropriate labels
+   */
   ngOnInit() {
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
       type: 'doughnut',
@@ -28,16 +34,21 @@ export class GraphPage implements OnInit{
               '#FFCE56',
               '#FF6384',
               '#FFCE56'
-            ]}
+            ]
+          }
         ]
       }
     });
+    // Update chart every 2.5 seconds
     this.updateData();
     setInterval(() => {
       this.updateData();
     }, 2500);
   }
 
+  /**
+   * Updates chart information with mqqtService data
+   */
   public updateData() {
     this.doughnutChart.data.datasets[0].data[0] = this.mqqtService.graphData[0];
     this.doughnutChart.data.datasets[0].data[1] = this.mqqtService.graphData[1];

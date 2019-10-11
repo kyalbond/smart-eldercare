@@ -1,3 +1,6 @@
+/**
+ * Data structure for holding emergency details about the elder.
+ */
 export class EmergencyDetails {
 
     public imageURL: any = null;
@@ -16,6 +19,7 @@ export class EmergencyDetails {
 
 }
 
+// Dummie data for application
 export const grandpaJoe: EmergencyDetails = {
     imageURL: 'https://vignette.wikia.nocookie.net/roalddahl/images/b/b9/Illmannered.jpg/revision/latest?cb=20140911174536',
     name: 'Grandpa Joe',

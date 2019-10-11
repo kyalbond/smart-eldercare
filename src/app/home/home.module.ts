@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 
+/**
+ * Set routes for tab navigation
+ */
 const routes: Routes = [
   {
     path: 'tabs',

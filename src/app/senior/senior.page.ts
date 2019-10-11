@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 import { MqqtService } from '../mqqt.service';
 import { AlertController } from '@ionic/angular';
 
+/**
+ * SeniorPage is the main screen of this application. It handles displaying where
+ * the elder was last seen, the ability to connect to the server, navigate to emergency,
+ * battery status and movements.
+ */
 @Component({
   selector: 'app-senior',
   templateUrl: './senior.page.html',
@@ -11,6 +16,14 @@ import { AlertController } from '@ionic/angular';
 })
 export class SeniorPage {
 
+  /**
+   * Initialize variables and start an interval timer for check if it has been 5 minutes.
+   * (Occurs every 5 seconds)
+   * 
+   * @param router For navigating to different page
+   * @param mqqtService Mqqt service handler
+   * @param alertController For displaying alerts
+   */
   constructor(
     public router: Router,
     public mqqtService: MqqtService,
@@ -23,22 +36,39 @@ export class SeniorPage {
     }, 5000);
   }
 
+  /**
+   * Connect to mqqt server
+   */
   public connect() {
     this.mqqtService.connect();
   }
 
+  /**
+   * Disconnect from mqqt server
+   */
   public disconnect() {
     this.mqqtService.disconnect();
   }
 
+  /**
+   * Navigate to battery page
+   */
   public navBattery() {
     this.router.navigate(['/battery']);
   }
 
+  /**
+   * Navigate to emergency page
+   */
   public navEmergency() {
     this.router.navigate(['/emergency']);
   }
 
+  /**
+   * Create alert
+   * @param alrtHeader alert header string
+   * @param alrtMessage alert message string
+   */
   async createAlert(alrtHeader: any, alrtMessage: any) {
     const alert = await this.alertController.create({
       header: alrtHeader,
