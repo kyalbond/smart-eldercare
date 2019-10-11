@@ -22,9 +22,10 @@ export class MqqtService {
 
   public msg: Message = null;                     // Latest message from server in data structure
   public instance: Instance = new Instance();     // Latest instance of messages (contains one msg for each room)
+  public oldInstance: Instance = new Instance();  // Old instance for getting latest battery info
 
   public instances: Instance[] = [];              // List of all instances recieved
-  public motionMessages: Message[] = [new Message('2019-10-08 17:00:26,bedroom,0,88')];   // List of all messages with movement
+  public motionMessages: Message[] = [];   // List of all messages with movement
 
   public locationImg: any = '../../assets/images/house.PNG';  // Current image to be displayed for location
   public locationTime: any = 'never';             // Latest time of last msg sent
@@ -34,9 +35,9 @@ export class MqqtService {
 
   public movementWarning = false;                 // Boolean for if movement has been detected
   public timer: any;                              // Timer for movement check
-  public TIMEOUT_TIME = 300000;                   // Time for timer (300000 = 5 minutes)
+  public TIMEOUT_TIME = 300000;                   // Timeout for timer (300000 = 5 minutes)
 
-  public graphData: number[] = [1, 2, 3, 4, 5];   // Data for graph to pull information from
+  public graphData: number[] = [0,0,0,0,0];   // Data for graph to pull information from
 
   /**
    * Called when a message arrives from the server
@@ -83,7 +84,7 @@ export class MqqtService {
     this.instance.addRoom(this.msg);
     if (this.instance.getLength() === 5) {
       this.instances.push(this.instance);
-      console.log(this.instance);
+      this.oldInstance = this.instance;
       this.instance = new Instance();
     }
   }

@@ -18,12 +18,13 @@ export class Instance {
      * Gets room with corresponding string name
      * @param room Room to get from instance
      */
-    public getRoom(room: string) {
+    public getBatteryfromRoom(room: string): string {
         this.rooms.forEach(msg => {
             if (msg.sensor_location === room) {
-                return msg.battery_status;
+                return msg.battery_status + '';
             }
         });
+        return 'n/a'
     }
 
     /**
@@ -33,14 +34,4 @@ export class Instance {
         return this.rooms.length;
     }
 
-    /**
-     * Print instance in a nice format.
-     */
-    public toString(): string {
-        let s = 'Instance ------> ';
-        this.rooms.forEach(element => {
-            s += element;
-        });
-        return s + '<-------';
-    }
 }

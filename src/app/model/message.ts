@@ -22,6 +22,10 @@ export class Message {
         this.battery_status = parseInt(msgStrings[3], 10);
     }
 
+    public getBattery(): string {
+        return this.battery_status + '';
+    }
+
     /**
      * Get date from raw data
      */
@@ -61,15 +65,5 @@ export class Message {
             default:
                 return '../../assets/images/house.PNG';
         }
-    }
-
-    /**
-     * Print object in neat format
-     */
-    public toString(): string {
-        return '\nTime: ' + this.timestamp.toString() +
-            '\nLocation: ' + this.sensor_location +
-            '\nMotion Detected: ' + this.motion_status +
-            '\nBattery Status: ' + this.battery_status + '%';
     }
 }

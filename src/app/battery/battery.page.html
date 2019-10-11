@@ -9,30 +9,9 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-label>Bedroom</ion-label>
-      <ion-note slot="end" color="primary">{{mqqtService.instance.getRoom('bedroom')}}</ion-note>
+    <ion-item *ngFor="let room of mqqtService.oldInstance.rooms">
+      <ion-label>{{room.getRoom()}}</ion-label>
+      <ion-note slot="end" color="primary">{{room.getBattery()}}</ion-note>
     </ion-item>
-
-    <ion-item>
-      <ion-label>Kitchen</ion-label>
-      <ion-note slot="end" color="primary">{{mqqtService.instance.getRoom('kitchen')}}</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Dining Room</ion-label>
-      <ion-note slot="end" color="primary">{{mqqtService.instance.getRoom('dining')}}</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Living Room</ion-label>
-      <ion-note slot="end" color="primary">{{mqqtService.instance.getRoom('living')}}</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Toilet</ion-label>
-      <ion-note slot="end" color="primary">{{mqqtService.instance.getRoom('toilet')}}</ion-note>
-    </ion-item>
-
   </ion-list>
 </ion-content>
